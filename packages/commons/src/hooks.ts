@@ -125,6 +125,10 @@ export function processHooks (hooks: any[], initialHookObject: any) {
   };
   // Go through all hooks and chain them into our promise
   const promise = hooks.reduce((current: Promise<any>, fn) => {
+    if (typeof fn !== 'function') {
+      throw new Error(`${initialHookObject.type} hook for ${initialHookObject.type} is not a function!`)
+    }
+    
     // @ts-ignore
     const hook = fn.bind(this);
 
